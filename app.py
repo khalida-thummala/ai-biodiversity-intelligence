@@ -13,7 +13,6 @@ load_dotenv()
 
 st.set_page_config(
     page_title="Darukaa.Earth | AI Biodiversity Intelligence",
-    page_icon="??",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -89,18 +88,18 @@ if "latest_analysis" not in st.session_state:
 # Sidebar
 with st.sidebar:
     st.image("https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-    st.title("?? Darukaa.Earth AI")
+    st.title("Darukaa.Earth AI")
     st.caption("Biodiversity Intelligence Reasoning System")
 
     st.markdown("---")
     st.subheader("System Status")
-    st.success("? Knowledge Layer: RAG Active (8 Curated Benchmarks)")
-    st.success("? Reasoning Core: Multi-Metric Synthesizer Active")
-    st.success("? Gemini LLM Grounding: Connected")
+    st.success("Knowledge Layer: RAG Active (8 Curated Benchmarks)")
+    st.success("Reasoning Core: Multi-Metric Synthesizer Active")
+    st.success("Gemini LLM Grounding: Connected")
 
     st.markdown("---")
     st.subheader("Quick Benchmarks")
-    if st.button("?? Semi-Arid Monoculture Wheat (0.3% SOC)", use_container_width=True):
+    if st.button("Semi-Arid Monoculture Wheat (0.3% SOC)", use_container_width=True):
         st.session_state.preset_query = "What interventions can improve biodiversity and ecosystem resilience on my land?"
         st.session_state.preset_vars = {
             "soil_organic_carbon": "0.3%",
@@ -110,7 +109,7 @@ with st.sidebar:
         }
         st.rerun()
 
-    if st.button("?? Watershed & Slope Restoration", use_container_width=True):
+    if st.button("Watershed & Slope Restoration", use_container_width=True):
         st.session_state.preset_query = "Severe runoff erosion, soil compaction, and zero earthworms on sloping arable land"
         st.session_state.preset_vars = {
             "soil_organic_carbon": "0.8%",
@@ -120,7 +119,7 @@ with st.sidebar:
         }
         st.rerun()
 
-    if st.button("?? Reset Conversation", use_container_width=True):
+    if st.button("Reset Conversation", use_container_width=True):
         st.session_state.agent.reset()
         st.session_state.chat_messages = []
         st.session_state.latest_analysis = None
@@ -131,31 +130,31 @@ with st.sidebar:
         st.rerun()
 
 # Header
-st.markdown('<div class="main-header">?? Darukaa.Earth: AI Biodiversity Intelligence</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-header">Darukaa.Earth: AI Biodiversity Intelligence</div>', unsafe_allow_html=True)
 st.markdown('<div class="sub-header">Scientific Multi-Metric Reasoning & Knowledge-Grounded Ecosystem Restoration</div>', unsafe_allow_html=True)
 
 # Tabs
 tab_chat, tab_structured, tab_rag, tab_report = st.tabs([
-    "?? Conversational Scientist",
-    "?? Structured Assessment (JSON)",
-    "?? Knowledge Layer (RAG Inspector)",
-    "?? Download Assessment Report"
+    "Conversational Scientist",
+    "Structured Assessment (JSON)",
+    "Knowledge Layer (RAG Inspector)",
+    "Download Assessment Report"
 ])
 
 def render_analysis(result):
     if result.is_clarifying_required:
         st.markdown("""
         <div class="clarify-card">
-            <h4>?? Baseline Parameters Needed</h4>
+            <h4>Baseline Parameters Needed</h4>
             <p>An environmental scientist evaluates multiple ecosystem dimensions before recommending interventions. Please provide:</p>
         </div>
         """, unsafe_allow_html=True)
         for q in result.clarifying_questions:
-            st.markdown(f"? **{q}**")
+            st.markdown(f"- **{q}**")
         if result.missing_critical_variables:
             st.caption("Missing dimensions: " + ", ".join(result.missing_critical_variables))
     else:
-        st.success(f"? **Ecosystem Diagnosis:** {result.synthesis_summary}")
+        st.success(f"**Ecosystem Diagnosis:** {result.synthesis_summary}")
         st.subheader("Actionable, Evidence-Backed Recommendations")
         
         for idx, rec in enumerate(result.recommendations, start=1):
@@ -165,28 +164,28 @@ def render_analysis(result):
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                         <h3 style="margin: 0; color: #1b4332;">{idx}. {rec.title}</h3>
                         <div>
-                            <span class="metric-pill" style="background-color: #dbeafe; color: #1e40af;">? {rec.time_horizon}</span>
-                            <span class="metric-pill" style="background-color: #dcfce7; color: #15803d;">?? Confidence: {rec.confidence_level}</span>
+                            <span class="metric-pill" style="background-color: #dbeafe; color: #1e40af;">Time: {rec.time_horizon}</span>
+                            <span class="metric-pill" style="background-color: #dcfce7; color: #15803d;">Confidence: {rec.confidence_level}</span>
                         </div>
                     </div>
-                    <p><strong>?? Concrete Intervention:</strong><br>{rec.recommendation}</p>
-                    <p><strong>?? Scientific Mechanism (Why it works):</strong><br>{rec.scientific_reasoning}</p>
+                    <p><strong>Targeted Action:</strong><br>{rec.recommendation}</p>
+                    <p><strong>Scientific Mechanism (Why it works):</strong><br>{rec.scientific_reasoning}</p>
                     <div class="chain-box">
-                        <strong>?? Multi-Metric Causal Chain (>=3 Variables):</strong><br>
+                        <strong>Multi-Metric Causal Chain (>=3 Variables):</strong><br>
                         {rec.multi_metric_chain}
                     </div>
                     <div style="margin-top: 10px;">
-                        <strong>?? Quantified Metric Improvements:</strong><br>
+                        <strong>Quantified Metric Improvements:</strong><br>
                         {' '.join([f'<span class="metric-pill">{m}</span>' for m in rec.impacted_metrics])}
                     </div>
                     <div style="margin-top: 10px;" class="citation-tag">
-                        <strong>?? Scientific Citations:</strong><br>
-                        {'<br>? '.join([''] + rec.citations)}
+                        <strong>Scientific Citations:</strong><br>
+                        {'<br>- '.join([''] + rec.citations)}
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
 
-# ----------------- TAB 1: CHATBOT -----------------
+# TAB 1: CHATBOT
 with tab_chat:
     st.markdown("Consult with the AI Environmental Scientist. The system maintains conversation memory across turns and integrates soil, water, and vegetation dimensions.")
 
@@ -220,7 +219,7 @@ with tab_chat:
         st.session_state.chat_messages.append({"role": "assistant", "analysis": analysis_result})
         st.rerun()
 
-# ----------------- TAB 2: STRUCTURED ASSESSMENT (JSON) -----------------
+# TAB 2: STRUCTURED ASSESSMENT (JSON)
 with tab_structured:
     st.subheader("Structured Input Assessment (JSON / Parameters)")
     st.markdown("Input environmental parameters directly or via structured JSON format.")
@@ -240,7 +239,7 @@ with tab_structured:
 
     engine = st.session_state.agent.engine
     spatial_preview = engine.infer_spatial_context(lat_val, lon_val)
-    st.info(f"?? **Inferred Biome Context:** {spatial_preview['estimated_biome']}")
+    st.info(f"Inferred Biome Context: {spatial_preview['estimated_biome']}")
 
     structured_payload = {
         "soil_organic_carbon": soc_val,
@@ -256,7 +255,7 @@ with tab_structured:
     with st.expander("View / Edit Raw JSON Payload"):
         json_str = st.text_area("JSON Payload", value=json.dumps(structured_payload, indent=2), height=180)
 
-    if st.button("?? Analyze Structured Assessment", type="primary", use_container_width=True):
+    if st.button("Analyze Structured Assessment", type="primary", use_container_width=True):
         try:
             parsed_json = json.loads(json_str)
             with st.spinner("Analyzing multi-variable parameters against FAO/IPCC databases..."):
@@ -269,9 +268,9 @@ with tab_structured:
         except Exception as e:
             st.error(f"Error parsing JSON or executing engine: {e}")
 
-# ----------------- TAB 3: RAG KNOWLEDGE INSPECTOR -----------------
+# TAB 3: RAG KNOWLEDGE INSPECTOR
 with tab_rag:
-    st.subheader("?? Retrievable Knowledge Layer (RAG System)")
+    st.subheader("Retrievable Knowledge Layer (RAG System)")
     st.markdown(
         "Indexed peer-reviewed studies and guidelines from **FAO**, **IPCC**, and **IPBES** "
         "providing empirical grounding for all recommendations."
@@ -282,7 +281,7 @@ with tab_rag:
         results = st.session_state.kb.retrieve(rag_search, top_k=3)
         st.write(f"**Retrieved {len(results)} Benchmark Records for Query:** `{rag_search}`")
         for r in results:
-            with st.expander(f"[{r['id']}] {r['title']} ? {r['domain']}"):
+            with st.expander(f"[{r['id']}] {r['title']} - {r['domain']}"):
                 st.markdown(f"**Climate Zones:** {', '.join(r.get('climate_zones', []))}")
                 st.markdown(f"**Land Use Applicability:** {', '.join(r.get('land_use', []))}")
                 st.markdown(f"**Intervention:** {r.get('intervention')}")
@@ -295,28 +294,24 @@ with tab_rag:
                 for c in r.get("citations", []):
                     st.markdown(f"- *{c}*")
 
-# ----------------- TAB 4: DOWNLOAD REPORT OF USER QUERIES -----------------
+# TAB 4: DOWNLOAD REPORT
 with tab_report:
-    st.subheader("?? Download Your Ecological Assessment Report")
+    st.subheader("Download Your Ecological Assessment Report")
     st.markdown("Export a comprehensive scientific report of your current consultation, including detected site parameters, diagnosis, and evidence-backed interventions.")
 
     latest = st.session_state.latest_analysis
     accum_vars = st.session_state.agent.accumulated_variables
 
     if not latest or not latest.recommendations:
-        st.warning("No completed recommendations yet. Please run an assessment in Tab 1 (Chat) or Tab 2 (Structured Assessment) to generate your report.")
-        # Default report generation button based on current variables
-        if accum_vars:
-            st.write(f"**Current detected baseline:** {accum_vars}")
+        st.info("No active recommendations yet. Run an assessment in the Conversational Scientist tab or Structured Assessment tab to generate and download your personalized report.")
     else:
-        st.success(f"? **Active Assessment Ready for Download:** {len(latest.recommendations)} Interventions Formulated")
+        st.success(f"Active Assessment Ready for Download: {len(latest.recommendations)} Interventions Formulated")
         
-        # Display Report Preview Card
-        with st.expander("?? View Report Summary Preview", expanded=True):
+        with st.expander("View Report Summary Preview", expanded=True):
             st.markdown(f"**Ecosystem Diagnosis:** {latest.synthesis_summary}")
             st.markdown("**Interventions Included:**")
             for r in latest.recommendations:
-                st.markdown(f"- **{r.title}** ({r.time_horizon}, Confidence: {r.confidence_level})")
+                st.markdown(f"- **{r.title}** (Time: {r.time_horizon}, Confidence: {r.confidence_level})")
                 st.caption(f"Citations: {', '.join(r.citations)}")
 
         report_file_path = "c:/Users/khali/AIChatbot/User_Biodiversity_Assessment_Report.docx"
@@ -331,7 +326,7 @@ with tab_report:
             docx_bytes = f.read()
 
         st.download_button(
-            label="?? Download Ecological Assessment Report (.docx)",
+            label="Download Ecological Assessment Report (.docx)",
             data=docx_bytes,
             file_name="Darukaa_Ecological_Assessment_Report.docx",
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
