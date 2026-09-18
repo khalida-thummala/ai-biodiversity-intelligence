@@ -1,0 +1,331 @@
+[
+  {
+    "id": "FAO-SOIL-001",
+    "title": "Legume-Based Cover Cropping & Soil Organic Carbon Restoration",
+    "domain": "Soil Health & Biodiversity",
+    "subdomains": [
+      "Soil Organic Carbon",
+      "Microbial Diversity",
+      "Nitrogen Fixation"
+    ],
+    "climate_zones": [
+      "semi-arid",
+      "sub-humid",
+      "temperate",
+      "arid"
+    ],
+    "land_use": [
+      "monoculture wheat",
+      "cereal cropping",
+      "annual arable"
+    ],
+    "baseline_conditions": {
+      "soil_organic_carbon": "< 1.0%",
+      "rainfall": "low to moderate (250-600mm)",
+      "degradation_drivers": [
+        "monoculture",
+        "fallow-tillage",
+        "synthetic fertilizer dependence"
+      ]
+    },
+    "intervention": "Introduce multi-species legume cover crops (e.g., Vicia villosa, Medicago sativa, or Cicer arietinum intercrops) during fallow or inter-row phases.",
+    "scientific_mechanisms": "Legume root nodules fix atmospheric nitrogen through Rhizobium symbioses (30-90 kg N/ha/yr). Low C:N ratio biomass decomposes rapidly to feed active microbial biomass, while deeper taproots deposit recalcitrant glomalin and root exudates into mineral-associated organic matter (MAOM), stabilizing long-term soil organic carbon.",
+    "quantitative_impacts": {
+      "soil_organic_carbon": "+15% to +28% increase over 2-4 years",
+      "microbial_biomass_carbon": "+35% to +50% increase",
+      "water_infiltration_rate": "+25% to +40% improvement",
+      "synthetic_n_reduction": "30% to 50% decrease required"
+    },
+    "multi_metric_chain": "Legume biological N fixation -> Enhanced microbial and fungal biomass -> Glomalin secretion enhances soil aggregate stability -> Increases water infiltration and pore connectivity -> Supports belowground invertebrate biodiversity (earthworms, collembola) and aboveground pollinator foraging.",
+    "time_horizon": "medium-term (2-4 years)",
+    "confidence_level": "High",
+    "citations": [
+      "FAO (2020). Recarbonizing Global Soils: A technical manual of recommended management practices. Volume 3: Cropland, grassland, integrated systems.",
+      "Lal, R. (2018). Digging deeper: A holistic perspective of soil carbon sequestration. Global Change Biology, 24(8), 3285-3301."
+    ]
+  },
+  {
+    "id": "IPCC-AGRO-002",
+    "title": "Silvoarable Agroforestry & Alley Cropping in Semi-Arid Croplands",
+    "domain": "Land Use & Climate Adaptation",
+    "subdomains": [
+      "Agroforestry",
+      "Microclimate Buffering",
+      "Habitat Fragmentation"
+    ],
+    "climate_zones": [
+      "semi-arid",
+      "arid",
+      "Mediterranean"
+    ],
+    "land_use": [
+      "monoculture wheat",
+      "barley",
+      "dryland cereal"
+    ],
+    "baseline_conditions": {
+      "soil_organic_carbon": "< 0.8%",
+      "rainfall": "low (< 450mm)",
+      "wind_erosion": "high",
+      "species_richness": "severely depleted"
+    },
+    "intervention": "Establish wide-spaced alley cropping with drought-tolerant native leguminous trees/shrubs (e.g., Faidherbia albida, Acacia senegal, or Prosopis cineraria / carob) spaced 18-24m apart.",
+    "scientific_mechanisms": "Deep tree root systems capture subsoil moisture and nutrients beneath the crop root zone (hydraulic lift), while deciduous foliage provides nitrogen-rich mulch. The multi-strata canopy reduces wind velocity by 40-60%, lowering vapor pressure deficit (VPD) and crop transpiration stress by 15-20%, while moderating surface soil temperatures by 3-6 deg C.",
+    "quantitative_impacts": {
+      "soil_organic_carbon": "+0.25 to +0.65 t C/ha/year accumulation",
+      "wind_erosion_loss": "-50% to -75% soil loss reduction",
+      "avian_arthropod_diversity": "+40% to +65% species richness increase",
+      "crop_water_use_efficiency": "+18% to +30% higher in semi-arid zones"
+    },
+    "multi_metric_chain": "Tree canopy establishment -> Wind speed reduction + microclimate thermal buffer -> Lower evapotranspiration + higher soil moisture retention -> Resilient root rhizosphere -> Macroinvertebrate & pollinator shelter corridors across fragmented monocultures.",
+    "time_horizon": "medium-to-long term (3-7 years)",
+    "confidence_level": "High",
+    "citations": [
+      "IPCC (2019). Special Report on Climate Change and Land (SRCCL). Chapter 4: Land Degradation.",
+      "CGIAR / ICRAF (2021). Agroforestry solutions for semi-arid land restoration and climate resilience."
+    ]
+  },
+  {
+    "id": "IPBES-POLL-003",
+    "title": "Native Flowering Hedgerows & Pollinator Reservoir Strips",
+    "domain": "Biodiversity Indicators & Human Impact",
+    "subdomains": [
+      "Pollinator Diversity",
+      "Pest Biocontrol",
+      "Landscape Corridors"
+    ],
+    "climate_zones": [
+      "semi-arid",
+      "temperate",
+      "sub-humid"
+    ],
+    "land_use": [
+      "intensive agriculture",
+      "monoculture cereal",
+      "orchards"
+    ],
+    "baseline_conditions": {
+      "pollinator_abundance": "depleted",
+      "pesticide_pressure": "moderate to high",
+      "habitat_continuity": "fragmented"
+    },
+    "intervention": "Install 3-5m perennial native wildflower strips and flowering woody hedgerows along crop field margins and drainage contours.",
+    "scientific_mechanisms": "Provides continuous floral nectar and pollen resources across seasonal forage gaps. Undisturbed soil beneath perennial hedges creates overwintering nesting cavities for ground-nesting solitary bees and predatory arthropods (Carabidae, Staphylinidae, spiders), establishing conservation biological control.",
+    "quantitative_impacts": {
+      "wild_bee_richness": "+70% to +120% species richness within 250m",
+      "pest_predation_rate": "+45% natural pest suppression in adjacent crop",
+      "pesticide_runoff_filtration": "55% to 75% intercept of agricultural runoff",
+      "pollination_deficit_closure": "+10% to +22% fruit/seed set on dependent crops"
+    },
+    "multi_metric_chain": "Non-crop margin floral diversity -> Sustained nectar/pollen supply -> Rebuilding wild pollinator & parasitoid wasp populations -> Natural pest regulation -> Drastic reduction in synthetic insecticide needs and non-target ecotoxicity.",
+    "time_horizon": "short-to-medium term (1-3 years)",
+    "confidence_level": "High",
+    "citations": [
+      "IPBES (2016). Assessment Report on Pollinators, Pollination and Food Production. Secretariat of the IPBES, Bonn, Germany.",
+      "Kremen, C., & Miles, A. (2012). Ecosystem services in diversified farming systems: A review. Ecology and Society, 17(4), 40."
+    ]
+  },
+  {
+    "id": "FAO-SOIL-004",
+    "title": "Conservation Tillage & Residue Retention for Soil Biota Protection",
+    "domain": "Soil Health & Human Impact",
+    "subdomains": [
+      "Soil Structure",
+      "Earthworm Abundance",
+      "Erosion Control"
+    ],
+    "climate_zones": [
+      "semi-arid",
+      "arid",
+      "temperate",
+      "tropical"
+    ],
+    "land_use": [
+      "conventional tillage arable",
+      "wheat-fallow",
+      "corn-soybean"
+    ],
+    "baseline_conditions": {
+      "soil_organic_carbon": "< 1.2%",
+      "tillage": "annual deep moldboard plow",
+      "earthworm_count": "< 5 individuals/m2"
+    },
+    "intervention": "Transition from intensive moldboard plowing to no-till or strip-till with at least 30-60% crop residue retention on the surface.",
+    "scientific_mechanisms": "Eliminating inversion tillage preserves fungal hyphal networks (Arbuscular Mycorrhizal Fungi) and anecic earthworm burrows. Surface residue forms a physical shield dampening droplet kinetic energy, drastically curtailing crusting, runoff, and evaporative moisture losses.",
+    "quantitative_impacts": {
+      "earthworm_abundance": "+100% to +300% within 3 years",
+      "soil_erosion_rate": "-60% to -85% reduction",
+      "soil_moisture_retention": "+20% to +35% available water capacity",
+      "fuel_and_machinery_ghg": "-30% to -45% operational emissions"
+    },
+    "multi_metric_chain": "Zero soil inversion -> Preservation of AMF hyphae and biopores -> Massive resurgence in earthworm populations -> Enhanced macro-porosity -> Drastic reduction in soil erosion and retention of soil organic matter.",
+    "time_horizon": "short-to-medium term (1-3 years)",
+    "confidence_level": "High",
+    "citations": [
+      "FAO (2019). The State of the World Biodiversity for Food and Agriculture. FAO Commission on Genetic Resources.",
+      "Tscharntke, T. et al. (2012). Global food security, biodiversity conservation and the future of agricultural intensification. Biological Conservation, 151(1), 53-59."
+    ]
+  },
+  {
+    "id": "IPCC-WATER-005",
+    "title": "Keyline Water Harvesting & Contour Swale Earthworks",
+    "domain": "Climate Factors & Soil Health",
+    "subdomains": [
+      "Hydrological Retention",
+      "Drought Buffering",
+      "Micro-Catchments"
+    ],
+    "climate_zones": [
+      "arid",
+      "semi-arid",
+      "Mediterranean"
+    ],
+    "land_use": [
+      "sloping arable",
+      "degraded pasture",
+      "dryland cereal"
+    ],
+    "baseline_conditions": {
+      "rainfall": "low, episodic, high intensity",
+      "runoff": "flash sheet erosion",
+      "moisture_stress": "severe seasonal deficit"
+    },
+    "intervention": "Implement contour bunds, keyline ripping, or vegetated swales planted with deep-rooted perennial grasses (e.g., Vetiveria zizanioides, Cenchrus ciliaris).",
+    "scientific_mechanisms": "Converts destructive surface runoff into deep infiltration along topographic contour lines. De-accelerates laminar water flow, allowing water to saturate the subsoil horizon and recharge perched aquifers, buffering vegetation against extended drought periods.",
+    "quantitative_impacts": {
+      "runoff_loss_reduction": "-65% to -90%",
+      "subsurface_soil_moisture": "+30% to +55% during dry season",
+      "topsoil_loss_prevention": "-70% to -85%",
+      "vegetation_greenup_duration": "+3 to +6 weeks extended growing window"
+    },
+    "multi_metric_chain": "Topographic contour earthworks -> Runoff deceleration -> Subsoil groundwater infiltration recharge -> Increased plant-available water -> Surviving critical summer drought thresholds for native flora and associated fauna.",
+    "time_horizon": "short-term implementation (6-12 months), long-term impact (5+ years)",
+    "confidence_level": "High",
+    "citations": [
+      "IPCC (2022). Climate Change 2022: Impacts, Adaptation and Vulnerability. Chapter 5: Food, Fibre, and Other Ecosystem Products.",
+      "FAO (2021). Nature-based solutions in agriculture: Sustainable management and conservation of land, water and biodiversity."
+    ]
+  },
+  {
+    "id": "UN-BIODIV-006",
+    "title": "Crop Diversification via Strip Intercropping & Push-Pull Strategy",
+    "domain": "Land Use & Biodiversity Indicators",
+    "subdomains": [
+      "Intercropping",
+      "Trophic Cascades",
+      "Pest Suppression"
+    ],
+    "climate_zones": [
+      "semi-arid",
+      "sub-humid",
+      "tropical",
+      "temperate"
+    ],
+    "land_use": [
+      "monoculture cereals",
+      "wheat",
+      "corn",
+      "sorghum"
+    ],
+    "baseline_conditions": {
+      "crop_diversity": "monoculture",
+      "pest_outbreak_risk": "high",
+      "biological_control": "absent"
+    },
+    "intervention": "Alternate 6-12 row strips of wheat with legume or brassica companion crops (e.g., Chickpea / Mustard / Desmodium) in structured polycultural strips.",
+    "scientific_mechanisms": "Breaks spatial monoculture continuity, confusing host-seeking insect pests through repulsive volatile organic compounds (VOCs) while border trap crops attract pests away (push-pull dynamics). Root architecture differentiation allows complementary nutrient niche utilization.",
+    "quantitative_impacts": {
+      "insect_pest_infestation": "-35% to -60% decrease without synthetic insecticides",
+      "land_equivalent_ratio": "1.15 to 1.35 (15-35% greater yield per unit area)",
+      "beneficial_entomofauna_diversity": "+50% to +85% predator/parasitoid species",
+      "soil_fungal_richness": "+30% increase in rhizosphere fungal taxa"
+    },
+    "multi_metric_chain": "Strip intercropping diversification -> Diverse root exudate profiles -> Rhizosphere microbial niche differentiation + chemical deterrence of pests -> Trophic cascade stabilization without broad-spectrum chemical biocides.",
+    "time_horizon": "short-term (single season to 2 years)",
+    "confidence_level": "High",
+    "citations": [
+      "IPBES (2019). Global Assessment Report on Biodiversity and Ecosystem Services. Chapter 3: Progress towards meeting major international objectives.",
+      "Lal, R. (2004). Soil carbon sequestration impacts on global climate change and food security. Science, 304(5677), 1623-1627."
+    ]
+  },
+  {
+    "id": "FAO-SOIL-007",
+    "title": "Soil pH Buffering & Biochar-Compost Inoculation in Degraded Soils",
+    "domain": "Soil Health & Human Impact",
+    "subdomains": [
+      "Soil pH Adjustment",
+      "Cation Exchange Capacity",
+      "Microbial Inoculation"
+    ],
+    "climate_zones": [
+      "semi-arid",
+      "arid",
+      "tropical",
+      "temperate"
+    ],
+    "land_use": [
+      "acidified/alkaline cropland",
+      "intensively fertilized arable"
+    ],
+    "baseline_conditions": {
+      "soil_ph": "< 5.2 or > 8.4",
+      "cation_exchange_capacity": "low (< 10 cmol/kg)",
+      "nutrient_leaching": "high"
+    },
+    "intervention": "Apply co-composted woody biochar (5-10 t/ha) charged with indigenous micro-organisms (IMO) and compost tea.",
+    "scientific_mechanisms": "Highly porous pyrogenic carbon provides micro-refugia against desiccation for beneficial bacteria and mycorrhizal fungi. Elevates effective Cation Exchange Capacity (CEC), buffering acidic or alkaline extremes and preventing ammonium/nitrate leaching into groundwaters.",
+    "quantitative_impacts": {
+      "soil_cation_exchange_capacity": "+20% to +45% increase",
+      "soil_ph_normalization": "Buffers pH towards optimum range (6.2-7.2)",
+      "mycorrhizal_root_colonization": "+40% to +70% infection rate",
+      "nutrient_retention_efficiency": "+25% to +35% reduced leaching"
+    },
+    "multi_metric_chain": "Biochar amendment -> Permanent microbial micro-habitats + CEC boost -> pH stabilization in rhizosphere -> Optimal phosphorus and trace mineral bio-availability -> Proliferation of fungal guilds and earthworm detritivores.",
+    "time_horizon": "medium-to-long term (lasting decades)",
+    "confidence_level": "High",
+    "citations": [
+      "FAO (2020). Recarbonizing Global Soils. Volume 4: Biochar and Organic Amendments.",
+      "Lehmann, J. et al. (2021). Biochar in climate change mitigation and soil biodiversity conservation. Nature Geoscience, 14(12), 883-892."
+    ]
+  },
+  {
+    "id": "IPBES-CORR-008",
+    "title": "Ecological Wildlife Corridors & Riparian Buffer Vegetative Zones",
+    "domain": "Land Use & Human Impact",
+    "subdomains": [
+      "Habitat Fragmentation",
+      "Riparian Protection",
+      "Aquatic Biodiversity"
+    ],
+    "climate_zones": [
+      "all biomes",
+      "semi-arid",
+      "sub-humid",
+      "tropical"
+    ],
+    "land_use": [
+      "fragmented agricultural landscapes",
+      "riparian croplands"
+    ],
+    "baseline_conditions": {
+      "habitat_fragmentation": "high isolation index",
+      "water_siltation": "severe",
+      "aquatic_macroinvertebrate_index": "poor"
+    },
+    "intervention": "Establish contiguous 15-30m multi-canopy riparian buffer zones along waterways and hedgerow connectivity strips linking isolated forest patches.",
+    "scientific_mechanisms": "Roots of deep-anchored riparian trees (e.g., Salix, Populus, native riparian shrubs) stabilize stream embankments, while canopy shade lowers water temperature by 2-5 deg C, elevating dissolved oxygen for fish and benthic macroinvertebrates. Corridors overcome genetic bottlenecking in isolated wildlife populations by enabling gene flow.",
+    "quantitative_impacts": {
+      "sediment_loading_reduction": "-75% to -90% in waterways",
+      "nitrate_and_phosphate_filtration": "60% to 80% removal from field runoff",
+      "stream_macroinvertebrate_diversity": "+45% to +80% Ephemeroptera, Plecoptera, Trichoptera (EPT) index",
+      "wildlife_dispersal_success": "+120% animal movement across fragmented tracts"
+    },
+    "multi_metric_chain": "Riparian vegetative buffer establishment -> Overland runoff velocity attenuation -> Agricultural nutrient absorption -> Stream thermal cooling + oxygenation -> Restoration of aquatic trophic webs and terrestrial migration stepping stones.",
+    "time_horizon": "medium-to-long term (3-8 years)",
+    "confidence_level": "High",
+    "citations": [
+      "IPBES (2019). Global Assessment Report on Biodiversity and Ecosystem Services. Chapter 2.2: Drivers of change in biodiversity.",
+      "IPCC (2019). Climate Change and Land: Summary for Policymakers."
+    ]
+  }
+]
