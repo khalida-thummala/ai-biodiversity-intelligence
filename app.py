@@ -95,7 +95,15 @@ with st.sidebar:
     st.subheader("System Status")
     st.success("Knowledge Layer: RAG Active (8 Curated Benchmarks)")
     st.success("Reasoning Core: Multi-Metric Synthesizer Active")
-    st.success("Gemini LLM Grounding: Connected")
+    
+    if st.session_state.agent.engine.api_key:
+        st.success("Gemini LLM Grounding: Connected")
+    else:
+        st.info("Gemini LLM: Using Verified Benchmark Engine")
+        sidebar_key = st.text_input("Enter Gemini API Key (optional):", type="password", help="Enter key or set in Streamlit Cloud Secrets")
+        if sidebar_key:
+            st.session_state.agent = BiodiversityAgent(EnvironmentalScientistEngine(api_key=sidebar_key))
+            st.rerun()
 
     st.markdown("---")
     st.subheader("Quick Benchmarks")

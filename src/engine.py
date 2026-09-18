@@ -17,10 +17,21 @@ load_dotenv()
 
 class EnvironmentalScientistEngine:
     def __init__(self, api_key: Optional[str] = None, model_name: str = "gemini-3.6-flash"):
-        self.api_key = api_key or os.getenv("GEMINI_API_KEY")
-        if not self.api_key:
-            raise ValueError("GEMINI_API_KEY environment variable is not set.")
-        self.client = genai.Client(api_key=self.api_key)
+        if not api_key:
+            api_key = os.getenv("GEMINI_API_KEY")
+        if not api_key:
+            try:
+                import streamlit as st
+                if hasattr(st, "secrets") and "GEMINI_API_KEY" in st.secrets:
+                    api_key = st.secrets["GEMINI_API_KEY"]
+            except Exception:
+                pass
+        self.api_key = api_key
+        try:
+            self.client = genai.Client(api_key=self.api_key) if self.api_key else None
+        except Exception as e:
+            print("Gemini client initialization notice:", e)
+            self.client = None
         self.model_name = model_name
         self.kb = ScientificKnowledgeBase()
 
@@ -135,6 +146,9 @@ INSTRUCTIONS:
 2. If input has sufficient variables (e.g., Soil Organic Carbon: 0.3%, Rainfall: low, Crop: monoculture wheat, Region: semi-arid), synthesize deep, multi-metric recommendations linking Soil <-> Water <-> Biodiversity. Include measurable estimates and explicit citations.
 Return ONLY valid JSON.
 """
+        if not self.client:
+            return self._rule_based_fallback(user_text, structured_vars, retrieved_records, is_sufficient, detected, missing)
+
         try:
             response = self.client.models.generate_content(
                 model=self.model_name,
