@@ -1,12 +1,13 @@
 import streamlit as st
 import json
 import os
+import io
 from dotenv import load_dotenv
 
 from src.engine import EnvironmentalScientistEngine
 from src.knowledge_base import ScientificKnowledgeBase
 from src.agent import BiodiversityAgent
-from src.docx_generator import create_submission_docx
+from src.report_generator import generate_user_assessment_docx
 
 load_dotenv()
 
@@ -82,6 +83,8 @@ if "kb" not in st.session_state:
     st.session_state.kb = ScientificKnowledgeBase()
 if "chat_messages" not in st.session_state:
     st.session_state.chat_messages = []
+if "latest_analysis" not in st.session_state:
+    st.session_state.latest_analysis = None
 
 # Sidebar
 with st.sidebar:
@@ -96,8 +99,8 @@ with st.sidebar:
     st.success("? Gemini LLM Grounding: Connected")
 
     st.markdown("---")
-    st.subheader("? Quick Benchmark Scenarios")
-    if st.button("?? Darukaa Benchmark (0.3% SOC, Wheat)", use_container_width=True):
+    st.subheader("Quick Benchmarks")
+    if st.button("?? Semi-Arid Monoculture Wheat (0.3% SOC)", use_container_width=True):
         st.session_state.preset_query = "What interventions can improve biodiversity and ecosystem resilience on my land?"
         st.session_state.preset_vars = {
             "soil_organic_carbon": "0.3%",
@@ -107,13 +110,8 @@ with st.sidebar:
         }
         st.rerun()
 
-    if st.button("? Incomplete Query ('Biodiversity is declining')", use_container_width=True):
-        st.session_state.preset_query = "Biodiversity is declining on my land"
-        st.session_state.preset_vars = {}
-        st.rerun()
-
-    if st.button("?? Watershed & Tillage Case", use_container_width=True):
-        st.session_state.preset_query = "Severe runoff erosion, earthworms absent, intensive moldboard plow on slopes"
+    if st.button("?? Watershed & Slope Restoration", use_container_width=True):
+        st.session_state.preset_query = "Severe runoff erosion, soil compaction, and zero earthworms on sloping arable land"
         st.session_state.preset_vars = {
             "soil_organic_carbon": "0.8%",
             "rainfall": "episodic intense",
@@ -125,6 +123,7 @@ with st.sidebar:
     if st.button("?? Reset Conversation", use_container_width=True):
         st.session_state.agent.reset()
         st.session_state.chat_messages = []
+        st.session_state.latest_analysis = None
         if "preset_query" in st.session_state:
             del st.session_state.preset_query
         if "preset_vars" in st.session_state:
@@ -136,26 +135,25 @@ st.markdown('<div class="main-header">?? Darukaa.Earth: AI Biodiversity Intellig
 st.markdown('<div class="sub-header">Scientific Multi-Metric Reasoning & Knowledge-Grounded Ecosystem Restoration</div>', unsafe_allow_html=True)
 
 # Tabs
-tab_chat, tab_structured, tab_rag, tab_submission = st.tabs([
+tab_chat, tab_structured, tab_rag, tab_report = st.tabs([
     "?? Conversational Scientist",
     "?? Structured Assessment (JSON)",
     "?? Knowledge Layer (RAG Inspector)",
-    "?? Submission & Architecture"
+    "?? Download Assessment Report"
 ])
 
-# Helper function to render analysis result
 def render_analysis(result):
     if result.is_clarifying_required:
         st.markdown("""
         <div class="clarify-card">
-            <h4>?? Incomplete Input Detected (Scientific Principle Enforced)</h4>
-            <p>An environmental scientist cannot prescribe accurate interventions without at least 3 critical baseline dimensions (Soil Health, Hydrology/Climate, and Land Use). Please clarify:</p>
+            <h4>?? Baseline Parameters Needed</h4>
+            <p>An environmental scientist evaluates multiple ecosystem dimensions before recommending interventions. Please provide:</p>
         </div>
         """, unsafe_allow_html=True)
         for q in result.clarifying_questions:
             st.markdown(f"? **{q}**")
         if result.missing_critical_variables:
-            st.caption("Missing metrics: " + ", ".join(result.missing_critical_variables))
+            st.caption("Missing dimensions: " + ", ".join(result.missing_critical_variables))
     else:
         st.success(f"? **Ecosystem Diagnosis:** {result.synthesis_summary}")
         st.subheader("Actionable, Evidence-Backed Recommendations")
@@ -171,7 +169,7 @@ def render_analysis(result):
                             <span class="metric-pill" style="background-color: #dcfce7; color: #15803d;">?? Confidence: {rec.confidence_level}</span>
                         </div>
                     </div>
-                    <p><strong>?? Concrete Intervention (What to do):</strong><br>{rec.recommendation}</p>
+                    <p><strong>?? Concrete Intervention:</strong><br>{rec.recommendation}</p>
                     <p><strong>?? Scientific Mechanism (Why it works):</strong><br>{rec.scientific_reasoning}</p>
                     <div class="chain-box">
                         <strong>?? Multi-Metric Causal Chain (>=3 Variables):</strong><br>
@@ -190,9 +188,8 @@ def render_analysis(result):
 
 # ----------------- TAB 1: CHATBOT -----------------
 with tab_chat:
-    st.markdown("Engage in a multi-turn conversation. The AI retains memory across turns and requests missing parameters before proposing scientifically sound solutions.")
+    st.markdown("Consult with the AI Environmental Scientist. The system maintains conversation memory across turns and integrates soil, water, and vegetation dimensions.")
 
-    # Render previous messages
     for msg in st.session_state.chat_messages:
         with st.chat_message(msg["role"]):
             if msg["role"] == "user":
@@ -200,20 +197,18 @@ with tab_chat:
             else:
                 render_analysis(msg["analysis"])
 
-    # Handle preset queries
     default_prompt = st.session_state.get("preset_query", "")
     preset_vars = st.session_state.get("preset_vars", {})
 
     if prompt := st.chat_input("Describe your land, soil conditions, or environmental challenge...", key="chat_input"):
-        # Add user message
         st.session_state.chat_messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.write(prompt)
 
-        # Agent processing
         with st.chat_message("assistant"):
             with st.spinner("Retrieving scientific benchmarks & synthesizing multi-metric evidence..."):
                 analysis_result = st.session_state.agent.chat(prompt, structured_override=preset_vars)
+                st.session_state.latest_analysis = analysis_result
                 st.session_state.chat_messages.append({"role": "assistant", "analysis": analysis_result})
                 render_analysis(analysis_result)
         st.rerun()
@@ -221,20 +216,21 @@ with tab_chat:
     elif default_prompt and not st.session_state.chat_messages:
         st.session_state.chat_messages.append({"role": "user", "content": default_prompt})
         analysis_result = st.session_state.agent.chat(default_prompt, structured_override=preset_vars)
+        st.session_state.latest_analysis = analysis_result
         st.session_state.chat_messages.append({"role": "assistant", "analysis": analysis_result})
         st.rerun()
 
 # ----------------- TAB 2: STRUCTURED ASSESSMENT (JSON) -----------------
 with tab_structured:
     st.subheader("Structured Input Assessment (JSON / Parameters)")
-    st.markdown("Challenge requirement: *Support text input (mandatory) and structured input (JSON or similar)*.")
+    st.markdown("Input environmental parameters directly or via structured JSON format.")
 
     col1, col2 = st.columns(2)
     with col1:
-        soc_val = st.text_input("Soil Organic Carbon (SOC %)", value="0.3%", help="e.g. 0.3%, 1.2%")
-        ph_val = st.text_input("Soil pH", value="7.4", help="e.g. 6.5, 7.8")
+        soc_val = st.text_input("Soil Organic Carbon (SOC %)", value="0.3%")
+        ph_val = st.text_input("Soil pH", value="7.4")
         rain_val = st.selectbox("Rainfall Pattern / Moisture", ["low (< 450mm / semi-arid)", "moderate (500-800mm)", "high / monsoonal", "episodic flash runoff"])
-        crop_val = st.text_input("Primary Cropping System", value="monoculture wheat", help="e.g. monoculture wheat, soy, corn")
+        crop_val = st.text_input("Primary Cropping System", value="monoculture wheat")
     
     with col2:
         region_val = st.selectbox("Region / Biome", ["semi-arid", "arid dryland", "Mediterranean", "sub-humid", "temperate"])
@@ -242,7 +238,6 @@ with tab_structured:
         lat_val = st.number_input("Latitude (Bonus Spatial)", value=31.5204, format="%.4f")
         lon_val = st.number_input("Longitude (Bonus Spatial)", value=74.3587, format="%.4f")
 
-    # Spatial context preview
     engine = st.session_state.agent.engine
     spatial_preview = engine.infer_spatial_context(lat_val, lon_val)
     st.info(f"?? **Inferred Biome Context:** {spatial_preview['estimated_biome']}")
@@ -269,19 +264,20 @@ with tab_structured:
                     user_text="Provide targeted ecological restoration plan for this site.",
                     structured_vars=parsed_json
                 )
+                st.session_state.latest_analysis = structured_res
                 render_analysis(structured_res)
         except Exception as e:
             st.error(f"Error parsing JSON or executing engine: {e}")
 
 # ----------------- TAB 3: RAG KNOWLEDGE INSPECTOR -----------------
 with tab_rag:
-    st.subheader("?? Retrievable Knowledge Layer (20% Evaluation Weight)")
+    st.subheader("?? Retrievable Knowledge Layer (RAG System)")
     st.markdown(
-        "Demonstrating transparent knowledge grounding: peer-reviewed reports from **FAO**, **IPCC**, and **IPBES** "
-        "indexed with baseline conditions, quantitative metric outcomes, and causal chains."
+        "Indexed peer-reviewed studies and guidelines from **FAO**, **IPCC**, and **IPBES** "
+        "providing empirical grounding for all recommendations."
     )
 
-    rag_search = st.text_input("Test Knowledge Retrieval Query:", value="soil organic carbon semi-arid wheat")
+    rag_search = st.text_input("Search Knowledge Base:", value="soil organic carbon semi-arid wheat")
     if rag_search:
         results = st.session_state.kb.retrieve(rag_search, top_k=3)
         st.write(f"**Retrieved {len(results)} Benchmark Records for Query:** `{rag_search}`")
@@ -299,33 +295,46 @@ with tab_rag:
                 for c in r.get("citations", []):
                     st.markdown(f"- *{c}*")
 
-# ----------------- TAB 4: SUBMISSION & ARCHITECTURE -----------------
-with tab_submission:
-    st.subheader("?? Darukaa.Earth Submission Deliverables")
-    st.markdown("""
-    ### Document Submission Checklist (Mandatory):
-    1. **GitHub Repository Link:** [Add your public repo link or grant access to the 4 Darukaa accounts]
-    2. **Live Demo URL:** Streamlit / Cloud Hosted
-    3. **README.md Overview:** Architecture, database schema, local setup, multi-metric engine.
-    4. **Word Document (.docx):** Required submission document containing all architecture and review details.
-    """)
+# ----------------- TAB 4: DOWNLOAD REPORT OF USER QUERIES -----------------
+with tab_report:
+    st.subheader("?? Download Your Ecological Assessment Report")
+    st.markdown("Export a comprehensive scientific report of your current consultation, including detected site parameters, diagnosis, and evidence-backed interventions.")
 
-    st.markdown("---")
-    st.subheader("?? Generate Official Submission Document (.docx)")
-    col_sub1, col_sub2 = st.columns([3, 1])
-    with col_sub1:
-        st.write("Click the button below to generate the formatted Word Document (.docx) required by Darukaa.Earth with all evaluation rubrics covered.")
-    with col_sub2:
-        if st.button("Generate .docx Now", type="primary", use_container_width=True):
-            create_submission_docx()
-            st.success("? Document generated: `Darukaa_Earth_Submission_AI_Biodiversity.docx`")
+    latest = st.session_state.latest_analysis
+    accum_vars = st.session_state.agent.accumulated_variables
 
-    with open("c:/Users/khali/AIChatbot/Darukaa_Earth_Submission_AI_Biodiversity.docx", "rb") as f:
-        doc_bytes = f.read()
-    st.download_button(
-        label="?? Download Darukaa_Earth_Submission_AI_Biodiversity.docx",
-        data=doc_bytes,
-        file_name="Darukaa_Earth_Submission_AI_Biodiversity.docx",
-        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        use_container_width=True
-    )
+    if not latest or not latest.recommendations:
+        st.warning("No completed recommendations yet. Please run an assessment in Tab 1 (Chat) or Tab 2 (Structured Assessment) to generate your report.")
+        # Default report generation button based on current variables
+        if accum_vars:
+            st.write(f"**Current detected baseline:** {accum_vars}")
+    else:
+        st.success(f"? **Active Assessment Ready for Download:** {len(latest.recommendations)} Interventions Formulated")
+        
+        # Display Report Preview Card
+        with st.expander("?? View Report Summary Preview", expanded=True):
+            st.markdown(f"**Ecosystem Diagnosis:** {latest.synthesis_summary}")
+            st.markdown("**Interventions Included:**")
+            for r in latest.recommendations:
+                st.markdown(f"- **{r.title}** ({r.time_horizon}, Confidence: {r.confidence_level})")
+                st.caption(f"Citations: {', '.join(r.citations)}")
+
+        report_file_path = "c:/Users/khali/AIChatbot/User_Biodiversity_Assessment_Report.docx"
+        generate_user_assessment_docx(
+            detected_vars=accum_vars or latest.detected_variables,
+            synthesis_summary=latest.synthesis_summary,
+            recommendations=latest.recommendations,
+            output_path=report_file_path
+        )
+
+        with open(report_file_path, "rb") as f:
+            docx_bytes = f.read()
+
+        st.download_button(
+            label="?? Download Ecological Assessment Report (.docx)",
+            data=docx_bytes,
+            file_name="Darukaa_Ecological_Assessment_Report.docx",
+            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            type="primary",
+            use_container_width=True
+        )
