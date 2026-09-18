@@ -15,7 +15,7 @@ def set_cell_background(cell, fill_color):
 
 def create_submission_docx(
     output_path="c:/Users/khali/AIChatbot/Darukaa_Earth_Submission_AI_Biodiversity.docx",
-    github_url="https://github.com/darukaa-submission/ai-biodiversity-intelligence",
+    github_url="https://github.com/khalida-thummala/ai-biodiversity-intelligence.git",
     demo_url="http://localhost:8501 (or Streamlit Community Cloud)"
 ):
     doc = Document()
