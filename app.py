@@ -322,20 +322,15 @@ with tab_report:
                 st.markdown(f"- **{r.title}** (Time: {r.time_horizon}, Confidence: {r.confidence_level})")
                 st.caption(f"Citations: {', '.join(r.citations)}")
 
-        report_file_path = "c:/Users/khali/AIChatbot/User_Biodiversity_Assessment_Report.docx"
-        generate_user_assessment_docx(
+        doc_buffer = generate_user_assessment_docx(
             detected_vars=accum_vars or latest.detected_variables,
             synthesis_summary=latest.synthesis_summary,
-            recommendations=latest.recommendations,
-            output_path=report_file_path
+            recommendations=latest.recommendations
         )
-
-        with open(report_file_path, "rb") as f:
-            docx_bytes = f.read()
 
         st.download_button(
             label="Download Ecological Assessment Report (.docx)",
-            data=docx_bytes,
+            data=doc_buffer.getvalue(),
             file_name="Darukaa_Ecological_Assessment_Report.docx",
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             type="primary",

@@ -1,3 +1,4 @@
+import io
 from docx import Document
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.table import WD_TABLE_ALIGNMENT
@@ -17,8 +18,8 @@ def generate_user_assessment_docx(
     detected_vars: dict,
     synthesis_summary: str,
     recommendations: list,
-    output_path="c:/Users/khali/AIChatbot/User_Biodiversity_Assessment_Report.docx"
-) -> str:
+    output_path=None
+):
     doc = Document()
 
     title = doc.add_heading(level=0)
@@ -96,5 +97,11 @@ def generate_user_assessment_docx(
             p_meta.runs[0].font.italic = True
             p_meta.paragraph_format.space_after = Pt(14)
 
-    doc.save(output_path)
-    return output_path
+    if output_path is None:
+        buffer = io.BytesIO()
+        doc.save(buffer)
+        buffer.seek(0)
+        return buffer
+    else:
+        doc.save(output_path)
+        return output_path
