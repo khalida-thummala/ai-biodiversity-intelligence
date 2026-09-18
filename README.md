@@ -1,7 +1,9 @@
 # Darukaa.Earth: AI Biodiversity Intelligence Chatbot
 
 > **A Knowledge-Grounded, Multi-Metric Environmental Reasoning System**  
-> Built for the Darukaa.Earth Hackathon Challenge.
+> Built for the Darukaa.Earth Hackathon Challenge.  
+> **Live Demo:** [https://ai-biodiversity-intelligence.streamlit.app/](https://ai-biodiversity-intelligence.streamlit.app/)  
+> **Author:** Thummala Khalida (khalidathummala38@gmail.com)
 
 ---
 
